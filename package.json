@@ -28,7 +28,11 @@
   "private": true,
   "dependencies": {
     "@prisma/client": "^2.24.1",
+    "@types/bcrypt": "^5.0.0",
+    "@types/jsonwebtoken": "^8.5.1",
+    "bcrypt": "^5.0.1",
     "express": "4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "socket.io": "^4.1.2",
     "tslib": "^2.0.0"
   },

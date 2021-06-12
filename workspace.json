@@ -119,6 +119,19 @@
           }
         }
       }
+    },
+    "auth": {
+      "root": "packages/auth",
+      "sourceRoot": "packages/auth/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/auth/**/*.ts"]
+          }
+        }
+      }
     }
   }
 }
