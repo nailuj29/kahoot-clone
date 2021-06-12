@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@kahoot-clone/database": ["packages/database/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
