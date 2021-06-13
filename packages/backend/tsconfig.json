@@ -1,10 +1,13 @@
 {
   "extends": "../../tsconfig.base.json",
   "files": [],
-  "include": [],
+  "include": ["./express.d.ts"],
   "references": [
     {
-      "path": "./tsconfig.app.json"
+      "path": "./tsconfig.app.json",
+      "compilerOptions": {
+        "composite": true
+      }
     }
   ]
 }

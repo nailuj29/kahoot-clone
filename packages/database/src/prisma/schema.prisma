@@ -13,19 +13,19 @@ model Quiz {
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
   questions Question[]
-  cover     String     @db.VarChar(1024)
+  // cover     String     @db.VarChar(1024)
   author    User       @relation(fields: [userId], references: [id])
   userId    String
   private   Boolean    @default(false)
 }
 
 model Question {
-  id            String   @id @default(cuid())
-  Quiz          Quiz?    @relation(fields: [quizId], references: [id])
-  quizId        String?
-  text          String
-  answers       String[]
-  correctAnswer Int
+  id             String   @id @default(cuid())
+  quiz           Quiz?    @relation(fields: [quizId], references: [id])
+  quizId         String?
+  text           String
+  answers        String[]
+  correctAnswers Int[]
 }
 
 model User {

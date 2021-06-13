@@ -2,13 +2,26 @@ import { createToken, createUser, verifyPassword } from "@kahoot-clone/auth";
 import { prisma } from "@kahoot-clone/database";
 import { Handler } from "express";
 
-export const authorized_get: Handler = (req, res) => {
-  res.send("ok");
+export const me_get: Handler = async (req, res) => {
+  const user = await prisma.user.findFirst({
+    select: {
+      email: true,
+      username: true,
+      id: true,
+    },
+    where: {
+      id: {
+        equals: req.id
+      }
+    }
+  });
+
+  res.json(user);
 }
 
 export const login_post: Handler = async (req, res) => {
   const { email, password } = req.body as { [key: string]: string };
-  if (!(email  && password)) {
+  if (!(email && password)) {
     res.status(400).json({ status: 400, message: "Email and password are required"});
     return;
   }
@@ -46,7 +59,8 @@ export const signup_post: Handler = async (req, res) => {
     } else if (message.includes("Unique constraint failed on the fields: (`username`)")) {
       res.status(400).json({ status: 400, message: "Username must be unique"})
     }
-    res.status(500).json({ status: 500, message: `An error occurred creating this user. This can happen for many reasons. The error was: ${e}`});
+    console.error(e);
+    res.status(500).json({ status: 500, message: `An unknown error occurred creating this user.`});
     return;
   }
 }

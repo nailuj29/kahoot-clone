@@ -53,7 +53,6 @@ export const verifyToken = async (token: string): Promise<boolean> => {
       }
     });
     if (users.length == 0) {
-      console.log("good token; bad user")
       return false;
     }
     return true;

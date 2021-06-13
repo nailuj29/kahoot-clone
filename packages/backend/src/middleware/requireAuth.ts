@@ -1,14 +1,26 @@
-import { RequestHandler } from "express";
-import { verifyToken } from "@kahoot-clone/auth";
+import { Handler } from "express";
+import { getToken, verifyToken } from "@kahoot-clone/auth";
 
-export const requireAuth: RequestHandler = async (req, res, next) => {
+export const requireAuth: Handler = async (req, res, next) => {
+  if (!req.authenticated) {
+    res.status(401).json({ status: 401, message: "Not authorized" });
+    return;
+  }
+
+  next();
+}
+
+export const authenticate: Handler = async (req, res, next) => {
   if (req.headers.authorization) {
     if (await verifyToken(req.headers.authorization)) {
-      next();
+      req.authenticated = true;
+      req.id = await getToken(req.headers.authorization).id as string;
     } else {
-      res.status(401).json({ status: 401, message: "Unauthorized" });
+      req.authenticated = false;
     }
   } else {
-    res.status(401).json({ status: 401, message: "Unauthorized" });
+    req.authenticated = false;
   }
+
+  next();
 }
