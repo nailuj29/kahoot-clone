@@ -3,64 +3,189 @@
   "cli": {
     "defaultCollection": "@nrwl/express"
   },
-  "defaultProject": "backend",
+  "defaultProject": "backend-express",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true,
+        "babel": true
+      },
+      "component": {
+        "style": "scss"
+      },
+      "library": {
+        "style": "scss",
+        "linter": "eslint",
+        "strict": true
+      }
+    }
+  },
   "projects": {
+    "database": {
+      "root": "packages/database",
+      "sourceRoot": "packages/database/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/database/**/*.ts"
+            ]
+          }
+        }
+      }
+    },
+    "auth": {
+      "root": "packages/auth",
+      "sourceRoot": "packages/auth/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/auth/**/*.ts"
+            ]
+          }
+        }
+      }
+    },
     "frontend": {
       "root": "packages/frontend",
       "sourceRoot": "packages/frontend/src",
       "projectType": "application",
       "targets": {
         "build": {
-          "executor": "@nxext/svelte:build",
-          "outputs": ["{options.outputPath}"],
+          "executor": "@nrwl/web:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/frontend",
-            "entryFile": "packages/frontend/src/main.ts",
+            "index": "packages/frontend/src/index.html",
+            "main": "packages/frontend/src/main.tsx",
+            "polyfills": "packages/frontend/src/polyfills.ts",
             "tsConfig": "packages/frontend/tsconfig.app.json",
-            "svelteConfig": "packages/frontend/svelte.config.cjs",
             "assets": [
-              {
-                "glob": "/*",
-                "input": "packages/frontend/public/**",
-                "output": "./"
-              }
-            ]
+              "packages/frontend/src/favicon.ico",
+              "packages/frontend/src/assets"
+            ],
+            "styles": [
+              "packages/frontend/src/styles.scss"
+            ],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
           },
           "configurations": {
             "production": {
-              "dev": false
+              "fileReplacements": [
+                {
+                  "replace": "packages/frontend/src/environments/environment.ts",
+                  "with": "packages/frontend/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
             }
           }
         },
         "serve": {
-          "executor": "@nxext/svelte:build",
+          "executor": "@nrwl/web:dev-server",
           "options": {
-            "outputPath": "dist/packages/frontend",
-            "entryFile": "packages/frontend/src/main.ts",
-            "tsConfig": "packages/frontend/tsconfig.app.json",
-            "svelteConfig": "packages/frontend/svelte.config.cjs",
-            "assets": [
-              {
-                "glob": "/*",
-                "input": "packages/frontend/public/**",
-                "output": "./"
-              }
-            ],
-            "watch": true,
-            "serve": true
+            "buildTarget": "frontend:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "frontend:build:production",
+              "hmr": false
+            }
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/frontend/**/*.{ts,svelte,spec.ts}"]
+            "lintFilePatterns": [
+              "packages/frontend/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        }
+      }
+    },
+    "api-client": {
+      "root": "packages/api-client",
+      "sourceRoot": "packages/api-client/src",
+      "projectType": "library",
+      "targets": {
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/api-client/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        }
+      }
+    },
+    "backend-express": {
+      "root": "packages/backend-express",
+      "sourceRoot": "packages/backend-express/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:build",
+          "outputs": [
+            "{options.outputPath}"
+          ],
+          "options": {
+            "outputPath": "dist/packages/backend-express",
+            "main": "packages/backend-express/src/main.ts",
+            "tsConfig": "packages/backend-express/tsconfig.app.json",
+            "assets": [
+              "packages/backend-express/src/assets"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "optimization": true,
+              "extractLicenses": true,
+              "inspect": false,
+              "fileReplacements": [
+                {
+                  "replace": "packages/backend-express/src/environments/environment.ts",
+                  "with": "packages/backend-express/src/environments/environment.prod.ts"
+                }
+              ]
+            }
           }
         },
-        "check": {
-          "executor": "@nrwl/workspace:run-commands",
+        "serve": {
+          "executor": "@nrwl/node:execute",
           "options": {
-            "command": "svelte-check",
-            "cwd": "packages/frontend"
+            "buildTarget": "backend-express:build"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "packages/backend-express/**/*.ts"
+            ]
           }
         }
       }
@@ -72,12 +197,16 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": ["{options.outputPath}"],
+          "outputs": [
+            "{options.outputPath}"
+          ],
           "options": {
             "outputPath": "dist/packages/backend",
             "main": "packages/backend/src/main.ts",
             "tsConfig": "packages/backend/tsconfig.app.json",
-            "assets": ["packages/backend/src/assets"]
+            "assets": [
+              "packages/backend/src/assets"
+            ]
           },
           "configurations": {
             "production": {
@@ -102,33 +231,9 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["packages/backend/**/*.ts"]
-          }
-        }
-      }
-    },
-    "database": {
-      "root": "packages/database",
-      "sourceRoot": "packages/database/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/database/**/*.ts"]
-          }
-        }
-      }
-    },
-    "auth": {
-      "root": "packages/auth",
-      "sourceRoot": "packages/auth/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": ["packages/auth/**/*.ts"]
+            "lintFilePatterns": [
+              "packages/backend/**/*.ts"
+            ]
           }
         }
       }

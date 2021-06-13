@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@kahoot-clone/database": ["packages/database/src/index.ts"],
-      "@kahoot-clone/auth": ["packages/auth/src/index.ts"]
+      "@kahoot-clone/auth": ["packages/auth/src/index.ts"],
+      "@kahoot-clone/api-client": ["packages/api-client/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -23,16 +23,22 @@
     "libsDir": "packages"
   },
   "projects": {
-    "frontend": {
-      "tags": []
-    },
-    "backend": {
-      "tags": []
-    },
     "database": {
       "tags": []
     },
     "auth": {
+      "tags": []
+    },
+    "frontend": {
+      "tags": []
+    },
+    "api-client": {
+      "tags": []
+    },
+    "backend-express": {
+      "tags": []
+    },
+    "backend": {
       "tags": []
     }
   }

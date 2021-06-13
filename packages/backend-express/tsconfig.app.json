@@ -3,10 +3,7 @@
   "compilerOptions": {
     "outDir": "../../dist/out-tsc",
     "module": "commonjs",
-    "types": ["node"],
-    "emitDecoratorMetadata": true,
-    "target": "es2015",
-    "composite": true
+    "types": ["node", "express"]
   },
   "exclude": ["**/*.spec.ts"],
   "include": ["**/*.ts"]
