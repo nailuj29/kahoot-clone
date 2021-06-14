@@ -35,7 +35,17 @@ export class QuizService {
       take,
       cursor,
       where,
-      orderBy
+      orderBy,
+      include: {
+        questions: {
+          select: {
+            answers: true,
+            correctAnswers: true,
+            text: true,
+          }
+        }
+
+      }
     });
   }
 
@@ -58,6 +68,9 @@ export class QuizService {
     return this.prisma.quiz.findUnique({
       where: {
         id: quiz.id
+      },
+      include: {
+        questions: true
       }
     });
   }

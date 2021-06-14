@@ -14,8 +14,8 @@ model Quiz {
   updatedAt DateTime   @updatedAt
   questions Question[]
   // cover     String     @db.VarChar(1024)
-  author    User       @relation(fields: [userId], references: [id])
-  userId    String
+  author    User       @relation(fields: [authorId], references: [id])
+  authorId  String
   private   Boolean    @default(false)
 }
 
