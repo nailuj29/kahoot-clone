@@ -1,0 +1,11 @@
+# YOU MUST RUN `nx run backend:build` BEFORE BUILDING THIS IMAGE
+FROM node:latest
+WORKDIR /server
+COPY ./dist/packages/backend .
+COPY ./packages/database/src/prisma prisma
+ENV JWT_SECRET=REPLACEME_secretText
+ENV DATABASE_URL=postgresql://postgres:postgres@postgresDb:5432/kahoot?schema=public
+EXPOSE 3333
+RUN npm i --only=production
+RUN npx prisma generate
+ENTRYPOINT [ "node", "./main.js" ]

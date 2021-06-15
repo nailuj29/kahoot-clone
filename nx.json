@@ -29,16 +29,13 @@
     "auth": {
       "tags": []
     },
-    "frontend": {
-      "tags": []
-    },
-    "api-client": {
-      "tags": []
-    },
     "backend-express": {
       "tags": []
     },
     "backend": {
+      "tags": []
+    },
+    "frontend": {
       "tags": []
     }
   }

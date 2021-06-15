@@ -43,6 +43,11 @@ export class QuizService {
             correctAnswers: true,
             text: true,
           }
+        },
+        author: {
+          select: {
+            username: true
+          }
         }
 
       }
@@ -70,7 +75,13 @@ export class QuizService {
         id: quiz.id
       },
       include: {
-        questions: true
+        questions: {
+          select: {
+            answers: true,
+            correctAnswers: true,
+            text: true,
+          }
+        }
       }
     });
   }

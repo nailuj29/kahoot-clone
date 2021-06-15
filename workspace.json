@@ -20,6 +20,12 @@
         "linter": "eslint",
         "strict": true
       }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "scss",
+        "linter": "eslint"
+      }
     }
   },
   "projects": {
@@ -31,9 +37,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/database/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/database/**/*.ts"]
           }
         }
       }
@@ -46,98 +50,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/auth/**/*.ts"
-            ]
-          }
-        }
-      }
-    },
-    "frontend": {
-      "root": "packages/frontend",
-      "sourceRoot": "packages/frontend/src",
-      "projectType": "application",
-      "targets": {
-        "build": {
-          "executor": "@nrwl/web:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
-          "options": {
-            "outputPath": "dist/packages/frontend",
-            "index": "packages/frontend/src/index.html",
-            "main": "packages/frontend/src/main.tsx",
-            "polyfills": "packages/frontend/src/polyfills.ts",
-            "tsConfig": "packages/frontend/tsconfig.app.json",
-            "assets": [
-              "packages/frontend/src/favicon.ico",
-              "packages/frontend/src/assets"
-            ],
-            "styles": [
-              "packages/frontend/src/styles.scss"
-            ],
-            "scripts": [],
-            "webpackConfig": "@nrwl/react/plugins/webpack"
-          },
-          "configurations": {
-            "production": {
-              "fileReplacements": [
-                {
-                  "replace": "packages/frontend/src/environments/environment.ts",
-                  "with": "packages/frontend/src/environments/environment.prod.ts"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
-                }
-              ]
-            }
-          }
-        },
-        "serve": {
-          "executor": "@nrwl/web:dev-server",
-          "options": {
-            "buildTarget": "frontend:build",
-            "hmr": true
-          },
-          "configurations": {
-            "production": {
-              "buildTarget": "frontend:build:production",
-              "hmr": false
-            }
-          }
-        },
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/frontend/**/*.{ts,tsx,js,jsx}"
-            ]
-          }
-        }
-      }
-    },
-    "api-client": {
-      "root": "packages/api-client",
-      "sourceRoot": "packages/api-client/src",
-      "projectType": "library",
-      "targets": {
-        "lint": {
-          "executor": "@nrwl/linter:eslint",
-          "options": {
-            "lintFilePatterns": [
-              "packages/api-client/**/*.{ts,tsx,js,jsx}"
-            ]
+            "lintFilePatterns": ["packages/auth/**/*.ts"]
           }
         }
       }
@@ -149,16 +62,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/backend-express",
             "main": "packages/backend-express/src/main.ts",
             "tsConfig": "packages/backend-express/tsconfig.app.json",
-            "assets": [
-              "packages/backend-express/src/assets"
-            ]
+            "assets": ["packages/backend-express/src/assets"]
           },
           "configurations": {
             "production": {
@@ -183,9 +92,7 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/backend-express/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/backend-express/**/*.ts"]
           }
         }
       }
@@ -197,16 +104,12 @@
       "targets": {
         "build": {
           "executor": "@nrwl/node:build",
-          "outputs": [
-            "{options.outputPath}"
-          ],
+          "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/packages/backend",
             "main": "packages/backend/src/main.ts",
             "tsConfig": "packages/backend/tsconfig.app.json",
-            "assets": [
-              "packages/backend/src/assets"
-            ]
+            "assets": ["packages/backend/src/assets"]
           },
           "configurations": {
             "production": {
@@ -231,9 +134,50 @@
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": [
-              "packages/backend/**/*.ts"
-            ]
+            "lintFilePatterns": ["packages/backend/**/*.ts"]
+          }
+        }
+      }
+    },
+    "frontend": {
+      "root": "packages/frontend",
+      "sourceRoot": "packages/frontend",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "packages/frontend",
+            "outputPath": "dist/packages/frontend"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "frontend:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "frontend:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "frontend:build:production"
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["packages/frontend/**/*.{ts,tsx,js,jsx}"]
           }
         }
       }
