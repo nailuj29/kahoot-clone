@@ -7,9 +7,9 @@ interface QuizPreviewProps {
 
 const QuizPreview: FunctionComponent<QuizPreviewProps> = ({ quiz }) => {
   return (
-    <div>
-      <h2>{ quiz.title }</h2>
-      <p>{ quiz.questions.length } questions</p>
+    <div className="bg-gray-300 border-gray-400 border-2 rounded mt-3 mx-2 pl-1">
+      <h2 className="text-xl font-semibold">{ quiz.title }</h2>
+      <p className="font-light pl-1">{ quiz.questions.length } questions</p>
     </div>
   )
 }

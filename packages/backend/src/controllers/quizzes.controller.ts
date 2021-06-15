@@ -1,4 +1,4 @@
-import { Body, Controller, DefaultValuePipe, Get, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Post, Query, Req, UseGuards } from "@nestjs/common";
+import { Body, Controller, DefaultValuePipe, Get, NotFoundException, Param, ParseArrayPipe, ParseBoolPipe, ParseIntPipe, Post, Query, Req, UseGuards } from "@nestjs/common";
 import { Prisma, Quiz } from "@prisma/client";
 import { Type } from "class-transformer";
 import { Request } from "express";
@@ -32,10 +32,14 @@ export class QuizzesController {
   @Get("/:id")
   async byId(
     @Param("id") id: string
-  ): Promise<Quiz | null> {
-    return this.quizzes.quiz({
+  ): Promise<Quiz> {
+    const quiz = await this.quizzes.quiz({
       id
     });
+    if (quiz == null) {
+      throw new NotFoundException()
+    }
+    return quiz;
   }
 
   @Post("/")

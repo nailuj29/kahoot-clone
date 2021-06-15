@@ -1,8 +1,10 @@
+import Link from 'next/link'
 import React, { FunctionComponent, ReactElement } from 'react'
 import { useQuery } from 'react-query';
 import { Quiz } from '../types/quiz';
 import config from "../config";
 import QuizPreview from './QuizPreview';
+import ErrorModal from './ErrorModal';
 
 const fetchQuizzes = async ({ queryKey }): Promise<Quiz[]> => {
   const [ _key, count ] = queryKey;
@@ -20,9 +22,9 @@ const QuizList: FunctionComponent<QuizListProps> = ({ count }) => {
 
   if (isError) {
     return (
-      <div className="text-red-600 font-bold">
-        An error occurred fetching the latest quizzes
-      </div>
+      <ErrorModal>
+        An error occurred fetching the quizzes
+      </ErrorModal>
     );
   }
 
@@ -34,7 +36,15 @@ const QuizList: FunctionComponent<QuizListProps> = ({ count }) => {
 
   return (
     <div>
-      {data.map(quiz => <QuizPreview key={quiz.id} quiz={quiz} />)}
+      {data.map(quiz =>
+        (
+          <Link href={`/quiz/${quiz.id}`}>
+            <span className="cursor-pointer">
+              <QuizPreview key={quiz.id} quiz={quiz} />
+            </span>
+          </Link>
+        )
+      )}
     </div>
   )
 }
